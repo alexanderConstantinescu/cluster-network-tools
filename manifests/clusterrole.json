@@ -1,0 +1,67 @@
+{
+    "apiVersion": "rbac.authorization.k8s.io/v1",
+    "kind": "ClusterRole",
+    "metadata": {
+        "name": "cluster-network-analyser"
+    },
+    "rules": [
+        {
+            "apiGroups": [
+                ""
+            ],
+            "resources": [
+                "namespaces"
+            ],
+            "verbs": [
+                "list",
+                "get",
+                "watch"
+            ]
+        },
+        {
+            "apiGroups": [
+                "network.openshift.io"
+            ],
+            "resources": [
+                "clusternetworks",
+                "egressnetworkpolicies",
+                "hostsubnets",
+                "netnamespaces"
+            ],
+            "verbs": [
+                "get",
+                "list",
+                "watch",
+                "create",
+                "update",
+                "patch",
+                "delete"
+            ]
+        },
+        {
+            "apiGroups": [
+                ""
+            ],
+            "resources": [
+                "nodes"
+            ],
+            "verbs": [
+                "list",
+                "get",
+                "watch"
+            ]
+        },
+        {
+            "apiGroups": [
+                ""
+            ],
+            "resources": [
+                "nodes/status"
+            ],
+            "verbs": [
+                "patch",
+                "update"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,62 @@
+{
+    "apiVersion": "extensions/v1beta1",
+    "kind": "DaemonSet",
+    "metadata": {
+        "name": "tcpdump-test",
+        "namespace": "cluster-network-analyser"
+    },
+    "spec": {
+        "revisionHistoryLimit": 10,
+        "selector": {
+            "matchLabels": {
+                "app": "tcpdump-test"
+            }
+        },
+        "template": {
+            "metadata": {
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "tcpdump-test"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "image": "quay.io/aconstan/test:latest",
+                        "args": ["-i", "any", "port", "30492"],
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "tcpdump",
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "FallbackToLogsOnError"
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccount": "cluster-network-analyser",
+                "serviceAccountName": "cluster-network-analyser",
+                "hostNetwork": true,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node-role.kubernetes.io/master",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists"
+                    }
+                ]
+            }
+        },
+        "templateGeneration": 1,
+        "updateStrategy": {
+            "rollingUpdate": {
+                "maxUnavailable": 1
+            },
+            "type": "RollingUpdate"
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": {
+        "annotations": {
+            "openshift.io/description": "Cluster network analyser namespace",
+            "openshift.io/node-selector": ""
+        },
+        "labels": {
+            "name": "cluster-network-analyser"
+        },
+        "name": "cluster-network-analyser"
+    },
+    "spec": {
+        "finalizers": [
+            "kubernetes"
+        ]
+    }
+}
